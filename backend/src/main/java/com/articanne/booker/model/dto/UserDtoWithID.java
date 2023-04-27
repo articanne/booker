@@ -1,13 +1,21 @@
 package com.articanne.booker.model.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Set;
 
 @Data
-public class UserDto {
+@AllArgsConstructor
+@NoArgsConstructor
+public class UserDtoWithID {
+
+    @NotNull(message = "User ID cannot be null")
+    private Long id;
 
     @NotBlank(message = "Username cannot be blank")
     private String username;
