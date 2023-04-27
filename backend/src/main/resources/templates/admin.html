@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin</title>
+  <link rel="stylesheet" th:href="@{/bulma.min.css}">
+  <link rel="stylesheet" th:href="@{/booker.css}">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300;400;700&display=swap" rel="stylesheet">
+
+  <script th:src="@{/fetchUsers.js}"></script>
+</head>
+<body>
+
+<div class="container">
+  <div class="text-center">
+    <h1 class="message">ADMIN AREA</h1>
+    <p>Welcome, <strong th:text="${loggedInUser.username}">Username</strong>! Your role: <strong th:text="${loggedInUser.roles}">Role</strong></p>
+    <form th:action="@{/logout}" method="post">
+      <input type="submit" value="Sign Out"/>
+    </form>
+  </div>
+  <h1 class="title">Users</h1>
+
+  <div class="field has-addons">
+    <div class="control has-icons-left">
+      <input class="input" type="text" id="searchInput" placeholder="Search users" oninput="searchUsers()" />
+      <span class="icon is-small is-left">
+      <i class="fas fa-search"></i>
+    </span>
+    </div>
+  </div>
+
+  <div class="table-container">
+    <table class="table is-striped is-hoverable is-fullwidth">
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Username</th>
+        <th>Roles</th>
+      </tr>
+      </thead>
+      <tbody id="usersTableBody">
+      <!-- Data will be populated by JavaScript -->
+      </tbody>
+    </table>
+  </div>
+  <nav class="pagination is-centered" role="navigation" aria-label="pagination">
+    <a class="pagination-previous" id="previousPage" onclick="previousPage()">Previous</a>
+    <a class="pagination-next" id="nextPage" onclick="nextPage()">Next</a>
+    <ul class="pagination-list" id="paginationList">
+      <!-- Pagination will be populated by JavaScript -->
+    </ul>
+  </nav>
+</div>
+
+</body>
+</html>
