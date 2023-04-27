@@ -1,0 +1,73 @@
+#name: CI/CD Pipeline
+#
+#on:
+#  push:
+#    branches:
+#      - main
+#
+#jobs:
+#  build-and-test:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Checkout code
+#        uses: actions/checkout@v2
+#
+#      - name: Set up Docker Buildx
+#        uses: docker/setup-buildx-action@v1
+#
+#      - name: Cache Docker layers
+#        uses: actions/cache@v2
+#        with:
+#          path: /tmp/.buildx-cache
+#          key: ${{ runner.os }}-buildx-${{ github.sha }}
+#          restore-keys: |
+#            ${{ runner.os }}-buildx-
+#
+#      - name: Build and test frontend
+#        run: |
+#          cd frontend
+#          docker build --target test -t booker-frontend:test .
+#
+#      - name: Build and test backend
+#        run: |
+#          cd backend
+#          docker build --target test -t booker-backend:test .
+#
+#  deploy:
+#    needs: build-and-test
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Checkout code
+#        uses: actions/checkout@v2
+#
+#      - name: Set up Docker Buildx
+#        uses: docker/setup-buildx-action@v1
+#
+#      - name: Login to DockerHub
+#        uses: docker/login-action@v1
+#        with:
+#          username: ${{ secrets.DOCKERHUB_USERNAME }}
+#          password: ${{ secrets.DOCKERHUB_TOKEN }}
+#
+#      - name: Build and push Docker images
+#        uses: docker/build-push-action@v2
+#        with:
+#          context: .
+#          push: true
+#          tags: |
+#            your-dockerhub-username/booker-frontend:latest
+#            your-dockerhub-username/booker-backend:latest
+#          file: ./Dockerfile
+#
+#      - name: Setup SSH
+#        uses: webfactory/ssh-agent@v0.5.3
+#        with:
+#          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+#
+#      - name: Deploy to DigitalOcean
+#        run: |
+#          ssh -o "StrictHostKeyChecking=no" root@your-droplet-ip "cd /path/to/your/booker/directory && \
+#          git pull && \
+#          docker-compose pull && \
+#          docker-compose down && \
+#          docker-compose up -d"

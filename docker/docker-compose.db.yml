@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  local_db:
+    image: "postgres"
+    container_name: "booker_local_db"
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_DB: booker_db
+      POSTGRES_USER: booker
+      POSTGRES_PASSWORD: booker
+    volumes:
+      - booker_data:/var/lib/postgresql/data
+
+volumes:
+  booker_data:

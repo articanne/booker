@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300;400;700&display=swap" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <style>
+    html, body {
+      height: 100%;
+      font-family: 'Roboto Slab', serif;
+      background-color: #f8f1e7;
+    }
+    .container {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+    .message {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #5c2a2a;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="text-center">
+    <h1 class="message">USER AREA</h1>
+    <p>Welcome, <strong th:text="${loggedInUser.username}">Username</strong>! Your role: <strong th:text="${loggedInUser.roles}">Role</strong></p>
+    <form th:action="@{/logout}" method="post">
+      <input type="submit" value="Sign Out"/>
+    </form>
+  </div>
+</div>
+
+</body>
+</html>

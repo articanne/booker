@@ -1,0 +1,27 @@
+version: '3.8'
+services:
+  app:
+    build: ../booker-backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/booker
+      - SPRING_DATASOURCE_USERNAME=booker
+      - SPRING_DATASOURCE_PASSWORD=booker
+
+  db:
+    image: "postgres:latest"
+    container_name: "booker_db"
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: booker_db
+      POSTGRES_USER: booker
+      POSTGRES_PASSWORD: booker
+    volumes:
+      - booker_data:/var/lib/postgresql/data
+
+volumes:
+  booker_data:
