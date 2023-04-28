@@ -12,7 +12,10 @@ RUN npm run build
 # Test stage
 FROM base AS test
 COPY --from=build /app/build /app/build
+COPY . .
+ENV CI=true
 RUN npm test
+
 
 # Production stage
 FROM node:14-alpine AS production
